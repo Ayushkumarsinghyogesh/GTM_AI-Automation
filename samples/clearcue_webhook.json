@@ -1,0 +1,26 @@
+{
+  "_note": "ILLUSTRATIVE payload. ClearCue ka real schema alag ho sakta hai. Pehla real webhook aane par normalize.py ka FIELD_MAP isse match karo.",
+  "event_id": "cc_evt_8f3a1",
+  "type": "signal.created",
+  "person": {
+    "first_name": "Priya",
+    "last_name": "Nair",
+    "title": "VP Security",
+    "linkedin_url": "https://www.linkedin.com/in/Priya-Nair-Sec/?utm_source=x",
+    "email": null
+  },
+  "company": {
+    "name": "Northwind Cloud",
+    "website": "https://www.northwindcloud.io",
+    "employees": "501-1000",
+    "industry": "Computer Software",
+    "linkedin_url": "https://www.linkedin.com/company/northwind-cloud"
+  },
+  "signal": {
+    "name": "LinkedIn post: scanner frustration",
+    "type": "post_keyword",
+    "text": "Our Tenable backlog hit 14,000 findings again. Exploitation windows are shrinking to days and we are still triaging by hand.",
+    "url": "https://www.linkedin.com/posts/priya-nair-sec_activity-000000",
+    "detected_at": "2026-07-09T08:14:22Z"
+  }
+}

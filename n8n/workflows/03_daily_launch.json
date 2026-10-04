@@ -1,0 +1,72 @@
+{
+  "name": "03 Daily campaign launch",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "83d4415f-0cc7-4a8a-9804-9a74d2f9c00f",
+      "name": "Weekdays 10:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://engine:8000/campaigns/launch",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "options": {
+          "timeout": 120000
+        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ campaign_id: 0, limit: 25, dry_run: true }) }}"
+      },
+      "id": "7f7ecb7d-c3ac-4fe4-b249-c5a03a15bfbd",
+      "name": "Launch approved to HeyReach (DRY RUN)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Engine API Key"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Weekdays 10:00": {
+      "main": [
+        [
+          {
+            "node": "Launch approved to HeyReach (DRY RUN)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}

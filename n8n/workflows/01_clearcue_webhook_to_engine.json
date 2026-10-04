@@ -1,0 +1,98 @@
+{
+  "name": "01 ClearCue webhook to Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "clearcue-CHANGE-ME-TO-RANDOM",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7a63cf2b-2fef-4baa-89aa-1ef7d574383e",
+      "name": "ClearCue Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "45db218e-5e73-4828-95eb-74049d01e8e8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://engine:8000/webhooks/clearcue",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "options": {
+          "timeout": 30000
+        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}"
+      },
+      "id": "55fb06c5-da0e-4d4c-8e35-2128aae16977",
+      "name": "Forward to Engine",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Engine API Key"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "ok",
+        "options": {}
+      },
+      "id": "a350fbec-2e5a-4c3d-9952-bf0704246aa2",
+      "name": "Respond 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        520,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "ClearCue Webhook": {
+      "main": [
+        [
+          {
+            "node": "Forward to Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Forward to Engine": {
+      "main": [
+        [
+          {
+            "node": "Respond 200",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}

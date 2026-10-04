@@ -1,0 +1,7 @@
+{
+  "disabledMcpjsonServers": [
+    "supabase",
+    "heyreach",
+    "clearcue"
+  ]
+}

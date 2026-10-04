@@ -1,0 +1,103 @@
+# ONE FILE jo poore GTM behaviour ko control karti hai.
+# Code change kiye bina yahin se scoring, messaging rules, tiers badal sakte ho.
+# Source: BlackHat2026_Targeting.md (rubric). Jo points file me nahi the wo "ASSUMPTION" mark hain.
+
+brand:
+  company: DefenderMate
+  sender_name: Ashish Popli
+  luma_url: "https://lu.ma/REPLACE_ME"          # <-- Luma page ka link yahan
+  cta_line: "If it's useful, you can grab a slot here: {luma_url}"
+  thesis: >
+    Pre-AI vulnerability management programs are already obsolete. 59,000+ CVEs this year,
+    exploitation windows down from 32 days to 5, and a full Active Directory environment
+    compromised autonomously for $28. A scanner saying a CVE exists is no longer enough.
+    Teams need to know what is exploitable in their environment, what attack path it sits on,
+    and the cheapest action to reduce risk. Manual triage at AI-offense pace is an architecture
+    problem, not a staffing problem.
+  three_questions:
+    - "Which CVEs are actually exploitable in this specific environment?"
+    - "How does each CVE participate in an attack path?"
+    - "What is the cheapest, fastest action to reduce risk across the whole path?"
+  message_rules:
+    - "Reference exactly ONE specific thing the person said or did (from SIGNALS). Never invent facts."
+    - "No product pitch. It is an invitation to a conversation (private suite session at Black Hat 2026, Las Vegas, Aug 1-6)."
+    - "Founder voice: direct, opinionated, human. Short sentences. No buzzwords, no hype."
+    - "Do not include any links (the system appends the link)."
+    - "Do not mention tracking or monitoring. Refer to their post/comment naturally."
+    - "Write in English."
+
+limits:
+  connection_note_max_chars: 200
+  message_max_chars: 500
+
+banned_phrases:
+  - "i hope this finds you well"
+  - "game-changer"
+  - "game changer"
+  - "revolutionary"
+  - "cutting-edge"
+  - "synergy"
+  - "circle back"
+  - "touch base"
+  - "quick call"
+
+# --- Tiers (Black Hat file section 5) ---
+tiers:            # high -> low, first match wins
+  - {name: priority,  min: 14}
+  - {name: standard,  min: 9}
+  - {name: luma_only, min: 5}
+  - {name: drop,      min: 0}
+outreach_tiers: [priority, standard]   # sirf inhe message draft hota hai
+attendance_only_drop: true             # sirf attendance points ho to drop
+
+# --- Signals / rubric ---
+# classifiable=true  -> Claude (ya keyword fallback) evidence dekh kar decide karta hai
+# classifiable=false -> code deterministic tareeke se nikalta hai (title / company size)
+signals:
+  thesis_ai_post:
+    {category: thesis, points: 4, classifiable: true, description: "Posted about AI accelerating cyber threats, exploitation speed, or limits of manual triage"}
+  thesis_engaged_ai_vm:
+    {category: thesis, points: 3, classifiable: true, description: "Liked/commented/shared content about AI-driven vulnerability management"}
+  thesis_competitor_engagement:
+    {category: thesis, points: 3, classifiable: true, description: "Engaged with or follows Tuskira, Cogent Security, Wiz, Orca or similar AI-native security vendors"}
+  thesis_wrote_vm_inadequacy:
+    {category: thesis, points: 3, classifiable: true, description: "Wrote or spoke about inadequacy of current VM tools in an AI world"}
+  thesis_follows_researchers:
+    {category: thesis, points: 2, classifiable: true, description: "Follows/engages researchers writing about AI-driven attacks"}
+  title_leadership:
+    {category: pain, points: 4, classifiable: false, description: "CISO / VP Security / Head / Director of Security"}
+  title_vm_practitioner:
+    {category: pain, points: 3, classifiable: false, description: "VM Lead / Exposure Mgmt / TVM Manager"}
+  title_cto:
+    {category: pain, points: 2, classifiable: false, description: "CTO / VP Eng / Head of Platform Security (ASSUMPTION: file gives no points, confirm with Ashish)"}
+  hiring_vm_roles:
+    {category: pain, points: 3, classifiable: true, description: "Company is hiring for VM / exposure management roles"}
+  vm_tool_frustration:
+    {category: pain, points: 3, classifiable: true, description: "Posted frustration about VM tooling (Tenable, Qualys, Rapid7, patch backlog, too many findings)"}
+  uses_scanner:
+    {category: pain, points: 2, classifiable: true, description: "Company confirmed to use Tenable / Qualys / Rapid7 / Nessus"}
+  recent_breach:
+    {category: pain, points: 3, classifiable: true, description: "Company had a public breach or notable CVE in last 12 months"}
+  spoke_vm_conf:
+    {category: pain, points: 2, classifiable: true, description: "Spoke at a conference on VM / attack surface / exposure management"}
+  company_fit:
+    {category: pain, points: 2, classifiable: false, description: "200-2,000 employees and tech / SaaS / fintech / healthtech"}
+  bh_speaker:
+    {category: attendance, points: 4, classifiable: true, description: "Black Hat 2026 speaker or Arsenal presenter"}
+  bh_2026_post:
+    {category: attendance, points: 3, classifiable: true, description: "Posted about Black Hat 2026 specifically"}
+  bh_2024_2025:
+    {category: attendance, points: 1, classifiable: true, description: "Attended Black Hat in both 2024 and 2025"}
+
+# Title rules: pehla match jeetta hai (highest priority upar)
+title_rules:
+  drop_patterns: ["recruit", "talent", "\\bsales\\b", "marketing", "\\bhr\\b", "human resources", "student", "\\bgrc\\b", "compliance", "\\bintern\\b"]
+  ordered:
+    - {key: title_leadership, patterns: ["\\bciso\\b", "chief information security", "vp.{0,20}security", "vice president.{0,20}security", "head of (information )?security", "director.{0,20}security"]}
+    - {key: title_vm_practitioner, patterns: ["vulnerab", "exposure", "\\btvm\\b", "threat and vuln"]}
+    - {key: title_cto, patterns: ["\\bcto\\b", "chief technology", "vp.{0,15}engineering", "head of platform security"]}
+
+company_fit:
+  min_employees: 200
+  max_employees: 2000
+  industry_keywords: ["saas", "software", "fintech", "financial", "health", "cloud", "developer", "technology", "internet", "it services"]

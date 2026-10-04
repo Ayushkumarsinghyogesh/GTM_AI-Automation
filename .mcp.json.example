@@ -1,0 +1,18 @@
+{
+  "_comment": "Copy to .mcp.json. Ye optional hai: Claude Code ko direct data/tools dikhane ke liye. Secrets apne paas rakho.",
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=YOUR_PROJECT_REF&read_only=true"
+    },
+    "heyreach": {
+      "command": "npx",
+      "args": ["-y", "heyreach-mcp-server", "--api-key=YOUR_HEYREACH_API_KEY"]
+    },
+    "clearcue": {
+      "_comment": "ClearCue dashboard -> Integrations -> Clearcue MCP se exact URL copy karo (yahan guess nahi kiya)",
+      "type": "http",
+      "url": "PASTE_CLEARCUE_MCP_URL_HERE"
+    }
+  }
+}
