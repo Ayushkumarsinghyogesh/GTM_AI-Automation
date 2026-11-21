@@ -1,4 +1,4 @@
-# GTM Engine (Phase 1)
+# GTM Engine (Complete Phase 1)
 ClearCue → n8n → Engine (FastAPI) → Supabase → Claude → human approval → HeyReach.
 Claude Code se operate hota hai (`CLAUDE.md` + `.claude/commands/`).
 
